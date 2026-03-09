@@ -112,7 +112,7 @@ fun MainScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Kivicube 合辑",
+                        text = "Kivicube Collection",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -123,8 +123,8 @@ fun MainScreen(
                             collectionId = it
                             collectionErrorText = null
                         },
-                        label = { Text("合辑ID (6位字符)") },
-                        placeholder = { Text("输入6位合辑ID") },
+                        label = { Text("Collection ID (6 characters)") },
+                        placeholder = { Text("Enter 6-character Collection ID") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(
@@ -141,7 +141,7 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Close,
-                                        contentDescription = "清除"
+                                        contentDescription = "Clear"
                                     )
                                 }
                             }
@@ -160,16 +160,16 @@ fun MainScreen(
                     Button(
                         onClick = {
                             if (collectionId.isEmpty()) {
-                                collectionErrorText = "合辑ID不能为空"
+                                collectionErrorText = "Collection ID cannot be empty"
                             } else if (collectionId.length != 6) {
-                                collectionErrorText = "合辑ID必须为6位字符"
+                                collectionErrorText = "Collection ID must be 6 characters"
                             } else {
                                 onOpenKivicubeCollection(collectionId)
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("打开合辑")
+                        Text("Open Collection")
                     }
                 }
             }
@@ -188,7 +188,7 @@ fun MainScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Kivicube 场景",
+                        text = "Kivicube Scene",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -199,8 +199,8 @@ fun MainScreen(
                             sceneId = it
                             errorText = null
                         },
-                        label = { Text("场景ID (32位字符)") },
-                        placeholder = { Text("输入32位场景ID") },
+                        label = { Text("Scene ID (32 characters)") },
+                        placeholder = { Text("Enter 32-character Scene ID") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(
@@ -217,7 +217,7 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Close,
-                                        contentDescription = "清除"
+                                        contentDescription = "Clear"
                                     )
                                 }
                             }
@@ -236,16 +236,16 @@ fun MainScreen(
                     Button(
                         onClick = {
                             if (sceneId.isEmpty()) {
-                                errorText = "场景ID不能为空"
+                                errorText = "Scene ID cannot be empty"
                             } else if (sceneId.length != 32) {
-                                errorText = "场景ID必须为32位字符"
+                                errorText = "Scene ID must be 32 characters"
                             } else {
                                 onOpenKivicubeScene(sceneId)
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("打开场景")
+                        Text("Open Scene")
                     }
                 }
             }

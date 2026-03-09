@@ -26,7 +26,7 @@ class WebViewActivity : ComponentActivity() {
     private lateinit var webView: WebView
     private var pendingRequest: PermissionRequest? = null
     private var hasRequestedPermission = false
-    private var currentPermissionDescription: String = "权限"
+    private var currentPermissionDescription: String = "Permission"
     private var currentPermission: String = Manifest.permission.CAMERA
 
     private val devicePermissionLauncher = registerForActivityResult(
@@ -63,23 +63,23 @@ class WebViewActivity : ComponentActivity() {
                         when (resource) {
                             PermissionRequest.RESOURCE_VIDEO_CAPTURE -> {
                                 permissionsToRequest.add(Manifest.permission.CAMERA)
-                                permissionDescription += "相机、"
+                                permissionDescription += "Camera, "
                             }
                             PermissionRequest.RESOURCE_AUDIO_CAPTURE -> {
                                 permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
-                                permissionDescription += "麦克风、"
+                                permissionDescription += "Microphone, "
                             }
                             else -> {
-                                // 对于其他权限，也添加到请求列表中
-                                permissionsToRequest.add(Manifest.permission.CAMERA) // 默认使用相机权限作为占位
-                                permissionDescription += "其他权限、"
+                                // For other permissions, also add to request list
+                                permissionsToRequest.add(Manifest.permission.CAMERA) // Default to camera permission as placeholder
+                                permissionDescription += "Other permissions, "
                             }
                         }
                     }
 
                     if (permissionsToRequest.isNotEmpty()) {
-                        // 移除最后一个顿号
-                        permissionDescription = permissionDescription.trimEnd('、')
+                        // Remove last comma
+                        permissionDescription = permissionDescription.trimEnd(' ', ',')
                         handlePermissionRequest(request, permissionsToRequest.first(), permissionDescription)
                     } else {
                         request.deny()
@@ -102,7 +102,7 @@ class WebViewActivity : ComponentActivity() {
                 // Enable video autoplay
                 mediaPlaybackRequiresUserGesture = false
 
-                // 设置 User-Agent，增加Kivicube版本标识（从应用动态获取版本号）
+                // Set User-Agent with Kivicube version identifier (dynamically get version from app)
                 val versionName = try {
                     packageManager.getPackageInfo(packageName, 0).versionName ?: "1.0"
                 } catch (e: Exception) {
@@ -123,19 +123,19 @@ class WebViewActivity : ComponentActivity() {
     private fun handlePermissionRequest(request: PermissionRequest, permission: String, permissionDescription: String) {
         pendingRequest = request
 
-        // 存储权限描述以便后续使用
+        // Store permission description for later use
         this.currentPermissionDescription = permissionDescription
         this.currentPermission = permission
         this.hasRequestedPermission = false
 
-        // 检查权限状态
+        // Check permission status
         when (ContextCompat.checkSelfPermission(this, permission)) {
             PackageManager.PERMISSION_GRANTED -> {
                 request.grant(request.resources)
                 pendingRequest = null
             }
             else -> {
-                // 首次请求权限
+                // First permission request
                 devicePermissionLauncher.launch(permission)
             }
         }
@@ -153,22 +153,22 @@ class WebViewActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 当用户从设置界面返回时，检查权限状态
+        // Check permission status when user returns from settings
         checkPendingPermission()
     }
 
     private fun checkPendingPermission() {
-        // 如果有待处理的权限请求，检查当前是否已授予权限
+        // If there's a pending permission request, check if currently granted
         pendingRequest?.let { request ->
             when (ContextCompat.checkSelfPermission(this, currentPermission)) {
                 PackageManager.PERMISSION_GRANTED -> {
-                    // 权限已授予，直接授权给网页
+                    // Permission granted, authorize to webpage
                     request.grant(request.resources)
                     pendingRequest = null
                     hasRequestedPermission = false
                 }
                 else -> {
-                    // 权限仍然未授予，显示对话框
+                    // Permission still not granted, show dialog
                     if (hasRequestedPermission) {
                         showPermissionDialog()
                     }
@@ -181,12 +181,12 @@ class WebViewActivity : ComponentActivity() {
         this.currentPermissionDescription = permissionDescription
 
         android.app.AlertDialog.Builder(this)
-            .setTitle("需要$permissionDescription")
-            .setMessage("网页需要访问" + permissionDescription + "才能正常使用。请在设置中开启相关权限。")
-            .setPositiveButton("去设置") { _: android.content.DialogInterface, _: Int ->
+            .setTitle("$permissionDescription Required")
+            .setMessage("The webpage needs access to $permissionDescription to function properly. Please enable the permission in settings.")
+            .setPositiveButton("Go to Settings") { _: android.content.DialogInterface, _: Int ->
                 openAppSettings()
             }
-            .setNegativeButton("取消") { _: android.content.DialogInterface, _: Int ->
+            .setNegativeButton("Cancel") { _: android.content.DialogInterface, _: Int ->
                 pendingRequest?.deny()
                 pendingRequest = null
             }
