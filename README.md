@@ -1,13 +1,13 @@
-# Android开发接入Kivicube场景/合辑
+# Android Development Integration of Kivicube Scenes/Collections
 
-使用系统的WebView，来打开Kivicube场景/合辑的URL链接即可。
+Use the system's WebView to open the URL link of the Kivicube scene/collection.
 
-理论上有非常好的兼容性。
+it offers excellent compatibility.
 
-## 快速体验
+## Quick Experience
 
-可使用debug版本app-debug.apk安装包体验。
+You can use the debug version app-debug.apk installation package for a trial experience.
 
-直接右上角按钮Code -> Download ZIP，将源码下载到本地。
+Simply click the button in the top right corner: Code -> Download ZIP to download the source code to your local machine.
 
-本地解压后，将app-debug.apk发送到手机进行安装即可。
+After extracting the files locally, send the app-debug.apk to your phone for installation.
